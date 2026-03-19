@@ -1,0 +1,375 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wisdom School | Real-Time Learning</title>
+  <meta name="description" content="Real-time eLearning platform for students and teachers." />
+  <link id="faviconLink" rel="icon" type="image/png" href="./favicon.svg" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="bg-orb orb-a"></div>
+  <div class="bg-orb orb-b"></div>
+
+  <header class="site-header">
+    <div class="brand">
+      <div class="logo">
+        <img id="brandLogo" alt="Wisdom School logo" />
+        <span id="brandFallback">WS</span>
+      </div>
+      <div>
+        <p class="brand-title">Wisdom School</p>
+        <p class="brand-sub">Real-time learning hub</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button id="installBtn" class="btn ghost" type="button">Install App</button>
+      <button id="logoutBtn" class="btn danger hidden" type="button">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="publicHero" class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Live lessons • Tasks • Chats</p>
+        <h1>Teach, learn, and track progress in real time.</h1>
+        <p class="muted">Built for mobile-first learning. Teachers create lessons and tasks, students get personalized content instantly.</p>
+        <div class="hero-metrics">
+          <div>
+            <h3 id="statTeachers">0</h3>
+            <p>Teachers</p>
+          </div>
+          <div>
+            <h3 id="statStudents">0</h3>
+            <p>Students</p>
+          </div>
+          <div>
+            <h3 id="statLessons">0</h3>
+            <p>Lessons</p>
+          </div>
+        </div>
+      </div>
+      <div class="hero-slider">
+        <div id="sliderTrack" class="slider-track"></div>
+        <div id="sliderDots" class="slider-dots"></div>
+      </div>
+    </section>
+
+    <section id="authSection" class="auth-section">
+      <div class="card auth-card">
+        <div class="auth-tabs">
+          <button id="showLogin" class="tab active" type="button">Login</button>
+          <button id="showSignup" class="tab" type="button">Sign up</button>
+        </div>
+
+        <form id="loginForm" class="auth-form">
+          <input id="loginEmail" type="email" placeholder="Email" required />
+          <input id="loginPassword" type="password" placeholder="Password" required />
+          <button class="btn primary" type="submit">Login</button>
+          <button id="googleLogin" class="btn ghost" type="button">Continue with Google</button>
+          <p id="loginMsg" class="status"></p>
+        </form>
+
+        <form id="signupForm" class="auth-form hidden">
+          <input id="signupName" type="text" placeholder="Full name" required />
+          <input id="signupEmail" type="email" placeholder="Email" required />
+          <input id="signupPassword" type="password" placeholder="Password" required />
+          <select id="signupRole">
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+          </select>
+          <button class="btn primary" type="submit">Create account</button>
+          <button id="googleSignup" class="btn ghost" type="button">Sign up with Google</button>
+          <p id="signupMsg" class="status"></p>
+        </form>
+      </div>
+    </section>
+
+    <section id="verifyNotice" class="card hidden">
+      <h3>Email Verification Required</h3>
+      <p class="muted">We sent a verification link to your email. Verify and then reload or click refresh.</p>
+      <div class="inline-form">
+        <button id="resendVerify" class="btn ghost" type="button">Resend verification</button>
+        <button id="refreshVerify" class="btn primary" type="button">I verified</button>
+      </div>
+      <p id="verifyMsg" class="status"></p>
+    </section>
+
+    <section id="approvalNotice" class="card hidden">
+      <h3>Approval Pending</h3>
+      <p class="muted">Thanks for applying. Your request is under review by the principal/admin. Please wait for our response. This may take a few minutes, hours, or days depending on server busy time.</p>
+    </section>
+
+    <section id="pendingView" class="card hidden">
+      <h3>Request Under Review</h3>
+      <p class="muted">Your account is in review. You can chat with the principal while you wait for approval of email, fee, and account status.</p>
+      <div class="chat-panel pending-chat">
+        <div id="pendingChatHeader" class="chat-header">Chat with Principal</div>
+        <div id="pendingChatMessages" class="chat-messages"></div>
+        <form id="pendingChatForm" class="chat-form">
+          <input id="pendingChatInput" type="text" placeholder="Type a message" />
+          <button class="btn primary" type="submit">Send</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="roleNotice" class="card hidden"></section>
+
+    <section id="manualVerifyNotice" class="card hidden">
+      <h3>Verify Your Email</h3>
+      <p class="muted">Your request has been approved. Please verify your email by clicking the link we will send you. If you have already clicked the link, wait for the admin to confirm your verification.</p>
+    </section>
+
+    <section id="studentView" class="dashboard hidden">
+      <nav class="dash-nav">
+        <a href="#student-lessons">Lessons</a>
+        <a href="#student-tasks">Tasks</a>
+        <a href="#student-tests">Tests</a>
+        <a href="#student-chat">Chat</a>
+      </nav>
+
+      <div class="section-head">
+        <div>
+          <h2>Student Dashboard</h2>
+          <p id="studentWelcome" class="muted"></p>
+        </div>
+        <button id="studentProfileBtn" class="btn ghost" type="button">Edit profile</button>
+      </div>
+
+      <div id="student-lessons" class="grid">
+        <div class="card">
+          <h3>Your Lessons</h3>
+          <div id="studentLessons" class="list"></div>
+        </div>
+        <div id="student-tasks" class="card">
+          <h3>Your Tasks</h3>
+          <div id="studentTasks" class="list"></div>
+        </div>
+      </div>
+
+      <div id="student-tests" class="card">
+        <h3>Your Tests</h3>
+        <div id="studentTests" class="list"></div>
+      </div>
+
+      <div id="student-chat" class="card">
+        <h3>Chat with Teachers / Principal</h3>
+        <div class="chat-shell">
+          <div class="chat-list">
+            <form id="studentChatAddForm" class="inline-form">
+              <input id="studentChatEmail" type="email" placeholder="Teacher email" />
+              <button class="btn ghost" type="submit">Add</button>
+            </form>
+            <p id="studentChatAddMsg" class="status"></p>
+            <div id="studentChatList"></div>
+          </div>
+          <div class="chat-panel">
+            <div id="chatHeader" class="chat-header">Select a chat</div>
+            <div id="chatMessages" class="chat-messages"></div>
+            <form id="chatForm" class="chat-form">
+              <input id="chatInput" type="text" placeholder="Type a message" />
+              <button class="btn primary" type="submit">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="teacherView" class="dashboard hidden">
+      <nav class="dash-nav">
+        <a href="#teacher-students">Students</a>
+        <a href="#teacher-lessons">Lessons</a>
+        <a href="#teacher-tasks">Tasks</a>
+        <a href="#teacher-tests">Tests</a>
+        <a href="#teacher-chat">Chat</a>
+      </nav>
+
+      <div class="section-head">
+        <div>
+          <h2>Teacher Dashboard</h2>
+          <p id="teacherWelcome" class="muted"></p>
+        </div>
+        <button id="teacherProfileBtn" class="btn ghost" type="button">Edit profile</button>
+      </div>
+
+      <div id="teacher-students" class="grid">
+        <div class="card">
+          <h3>My Students</h3>
+          <form id="addStudentForm" class="inline-form">
+            <select id="studentSelect" required></select>
+            <button class="btn primary" type="submit">Link Student</button>
+          </form>
+          <p id="addStudentMsg" class="status"></p>
+          <div id="teacherStudents" class="list"></div>
+          <h4>Approved Students</h4>
+          <p class="muted">Select a student before creating tasks, lessons, tests, or chats.</p>
+          <div id="approvedStudents" class="list"></div>
+        </div>
+        <div class="card">
+          <h3>Create Lesson (PDF link only)</h3>
+          <form id="lessonForm" class="stack-form">
+            <select id="lessonStudent"></select>
+            <input id="lessonTitle" type="text" placeholder="Lesson title" required />
+            <textarea id="lessonDesc" rows="3" placeholder="Lesson details" required></textarea>
+            <input id="lessonPdfUrl" type="url" placeholder="PDF link (Google Drive, Dropbox, etc.)" />
+            <button class="btn primary" type="submit">Publish Lesson</button>
+          </form>
+          <p id="lessonMsg" class="status"></p>
+        </div>
+      </div>
+
+      <div id="teacher-tasks" class="grid">
+        <div class="card">
+          <h3>Create Task</h3>
+          <form id="taskForm" class="stack-form">
+            <select id="taskStudent"></select>
+            <input id="taskTitle" type="text" placeholder="Task title" required />
+            <textarea id="taskDetails" rows="3" placeholder="Task details" required></textarea>
+            <select id="taskType">
+              <option value="daily">Daily</option>
+              <option value="immediate">Immediate</option>
+            </select>
+            <input id="taskDue" type="date" />
+            <button class="btn primary" type="submit">Assign Task</button>
+          </form>
+          <p id="taskMsg" class="status"></p>
+        </div>
+        <div id="teacher-lessons" class="card">
+          <h3>My Lessons</h3>
+          <div id="teacherLessons" class="list"></div>
+        </div>
+      </div>
+
+      <div id="teacher-tests" class="grid">
+        <div class="card">
+          <h3>Create Test</h3>
+          <form id="testForm" class="stack-form">
+            <select id="testStudent"></select>
+            <input id="testTitle" type="text" placeholder="Test title" required />
+            <textarea id="testDetails" rows="3" placeholder="Test details" required></textarea>
+            <input id="testDue" type="date" />
+            <button class="btn primary" type="submit">Assign Test</button>
+          </form>
+          <p id="testMsg" class="status"></p>
+        </div>
+        <div class="card">
+          <h3>My Tests</h3>
+          <div id="teacherTests" class="list"></div>
+        </div>
+      </div>
+
+      <div id="teacher-chat" class="card">
+        <h3>Chat with Students / Principal</h3>
+        <div class="chat-shell">
+          <div class="chat-list">
+            <form id="teacherChatAddForm" class="inline-form">
+              <input id="teacherChatEmail" type="email" placeholder="Student email" />
+              <button class="btn ghost" type="submit">Add</button>
+            </form>
+            <p id="teacherChatAddMsg" class="status"></p>
+            <div id="teacherChatList"></div>
+          </div>
+          <div class="chat-panel">
+            <div id="teacherChatHeader" class="chat-header">Select a chat</div>
+            <div id="teacherChatMessages" class="chat-messages"></div>
+            <form id="teacherChatForm" class="chat-form">
+              <input id="teacherChatInput" type="text" placeholder="Type a message" />
+              <button class="btn primary" type="submit">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="profileDialog" class="dialog">
+    <form id="profileForm" class="dialog-card">
+      <h3>Update Profile</h3>
+      <input id="profileName" type="text" placeholder="Display name" required />
+      <button class="btn primary" type="submit">Save</button>
+      <button id="closeProfile" class="btn ghost" type="button">Close</button>
+      <p id="profileMsg" class="status"></p>
+    </form>
+  </dialog>
+
+  <dialog id="onboardDialog" class="dialog">
+    <form id="onboardForm" class="dialog-card">
+      <h3>Complete Your Profile</h3>
+      <select id="onboardRole" required>
+        <option value="student">Student</option>
+        <option value="teacher">Teacher</option>
+      </select>
+      <select id="onboardGrade" required>
+        <option value="Grade 1">Grade 1</option>
+        <option value="Grade 2">Grade 2</option>
+        <option value="Grade 3">Grade 3</option>
+        <option value="Grade 4">Grade 4</option>
+        <option value="Grade 5">Grade 5</option>
+        <option value="Grade 6">Grade 6</option>
+        <option value="Grade 7">Grade 7</option>
+        <option value="Grade 8">Grade 8</option>
+        <option value="Grade 9">Grade 9</option>
+        <option value="Grade 10">Grade 10</option>
+        <option value="Grade 11">Grade 11</option>
+        <option value="Grade 12">Grade 12</option>
+      </select>
+      <input id="onboardPhone" type="text" placeholder="Phone" required />
+      <div id="teacherExtra" class="stack-form hidden">
+        <input id="teacherDegree" type="text" placeholder="Degree" />
+        <input id="teacherClasses" type="text" placeholder="Classes you can teach (e.g., Grade 6, 7)" />
+        <input id="teacherExperience" type="text" placeholder="Experience (years)" />
+      </div>
+      <textarea id="onboardNotes" rows="3" placeholder="Other details (optional)"></textarea>
+      <button class="btn primary" type="submit">Send for approval</button>
+      <p id="onboardMsg" class="status"></p>
+    </form>
+  </dialog>
+
+  <section class="card">
+    <h3>How To Use</h3>
+    <p class="muted">Students: Login, complete your profile, and wait for approval. Once approved, check your lessons, tasks, tests, and chat with your teacher.</p>
+    <p class="muted">Teachers: Login, complete your profile, and wait for approval. After approval, select approved students, create lessons/tasks/tests, and chat with students.</p>
+  </section>
+
+  <footer class="site-footer">
+    <div>
+      <h4>Wisdom School</h4>
+      <p class="muted">Real-time learning hub for students and teachers.</p>
+    </div>
+    <div>
+      <p class="muted">Support: support@wisdomschool.com</p>
+      <p class="muted">Hours: Mon–Sat, 9am–6pm</p>
+    </div>
+  </footer>
+
+  <dialog id="adminGate" class="dialog">
+    <form id="adminGateForm" class="dialog-card">
+      <h3>Admin Access</h3>
+      <input id="adminGatePass" type="password" placeholder="Secret password" required />
+      <button class="btn primary" type="submit">Enter</button>
+      <button id="closeAdminGate" class="btn ghost" type="button">Close</button>
+      <p id="adminGateMsg" class="status"></p>
+    </form>
+  </dialog>
+
+  <dialog id="studentPreviewDialog" class="dialog">
+    <div class="dialog-card">
+      <h3>Student Profile</h3>
+      <div id="studentPreviewBody" class="list"></div>
+      <div class="inline-form">
+        <button id="selectStudentBtn" class="btn primary" type="button">Select Student</button>
+        <button id="startChatBtn" class="btn ghost" type="button">Start Chat</button>
+        <button id="closeStudentPreview" class="btn ghost" type="button">Close</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

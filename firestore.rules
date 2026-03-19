@@ -1,0 +1,65 @@
+﻿rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
+    }
+
+    function isSelf(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    match /links/{linkId} {
+      allow read, write: if true;
+    }
+
+    match /lessons/{lessonId} {
+      allow read, write: if true;
+    }
+
+    match /tasks/{taskId} {
+      allow read, write: if true;
+    }
+
+    match /tests/{testId} {
+      allow read, write: if true;
+    }
+
+    match /chats/{chatId} {
+      allow read, write: if true;
+
+      match /messages/{messageId} {
+        allow read, write: if true;
+      }
+    }
+
+    match /sliders/{sliderId} {
+      allow read, write: if true;
+    }
+
+    match /stats/{docId} {
+      allow read, write: if true;
+    }
+
+    match /group_chats/{groupId} {
+      allow read, write: if true;
+
+      match /messages/{messageId} {
+        allow read, write: if true;
+      }
+    }
+
+    match /settings/{docId} {
+      allow read, write: if true;
+    }
+  }
+}

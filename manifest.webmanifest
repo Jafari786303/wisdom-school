@@ -1,0 +1,12 @@
+{
+  "name": "Wisdom School",
+  "short_name": "WisdomSchool",
+  "start_url": "https://wisdomschool.vercel.app",
+  "scope": "https://wisdomschool.vercel.app",
+  "display": "standalone",
+  "background_color": "#0b1120",
+  "theme_color": "#0f172a",
+  "icons": [
+    { "src": "./favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

@@ -1,0 +1,126 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wisdom School | Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./admin.css" />
+</head>
+<body>
+  <div class="admin-shell">
+    <aside class="admin-sidebar">
+      <h1>Wisdom School</h1>
+      <p>Admin Control Center</p>
+      <nav>
+        <a href="#overview">Overview</a>
+        <a href="#users">Accounts</a>
+        <a href="#lessons">Lessons</a>
+        <a href="#tasks">Tasks</a>
+        <a href="#tests">Tests</a>
+        <a href="#chats">Chats</a>
+        <a href="#sliders">Sliders</a>
+      </nav>
+      <a class="back-link" href="./index.html">Back to platform</a>
+    </aside>
+
+    <main class="admin-main">
+      <section id="gateCard" class="card gate-card">
+        <h2>Admin Gate</h2>
+        <p class="muted">Enter the secret password to unlock admin login.</p>
+        <form id="gateForm">
+          <input id="gatePass" type="password" placeholder="Secret password" required />
+          <button type="submit">Unlock</button>
+        </form>
+        <p id="gateMsg" class="msg"></p>
+      </section>
+
+      <section id="dashboard" class="hidden">
+        <header id="overview" class="card row">
+          <div>
+            <h2>Dashboard Overview</h2>
+            <p id="adminBadge">Not signed in</p>
+          </div>
+          <button id="logoutBtn" class="danger" type="button">Logout</button>
+        </header>
+
+        <div class="stats-grid">
+          <article class="card"><h3 id="statUsers">0</h3><p>Users</p></article>
+          <article class="card"><h3 id="statLessons">0</h3><p>Lessons</p></article>
+          <article class="card"><h3 id="statTasks">0</h3><p>Tasks</p></article>
+          <article class="card"><h3 id="statTests">0</h3><p>Tests</p></article>
+          <article class="card"><h3 id="statChats">0</h3><p>Chats</p></article>
+        </div>
+
+        <section id="users" class="card">
+          <h3>Accounts</h3>
+          <div id="usersList" class="list-grid"></div>
+        </section>
+
+        <section id="lessons" class="card">
+          <h3>Lessons</h3>
+          <div id="lessonsList" class="list-grid"></div>
+        </section>
+
+        <section id="tasks" class="card">
+          <h3>Tasks</h3>
+          <div id="tasksList" class="list-grid"></div>
+        </section>
+
+        <section id="tests" class="card">
+          <h3>Tests</h3>
+          <div id="testsList" class="list-grid"></div>
+        </section>
+
+        <section id="chats" class="card">
+          <h3>Chats</h3>
+          <form id="adminChatStartForm" class="form-grid">
+            <input id="adminChatEmail" type="email" placeholder="User email to chat" />
+            <button type="submit">Start Chat</button>
+          </form>
+          <p class="muted">Tip: You can also start a chat from the Accounts list.</p>
+          <div class="chat-shell">
+            <div id="adminChatList" class="list-grid"></div>
+            <div class="chat-panel">
+              <div id="adminChatHeader" class="muted">Select a chat</div>
+              <div id="adminChatMessages" class="list-grid"></div>
+              <form id="adminChatForm" class="form-grid">
+                <input id="adminChatInput" placeholder="Type a reply" />
+                <button type="submit">Send</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section id="sliders" class="card">
+          <h3>Homepage Sliders</h3>
+          <form id="sliderForm" class="form-grid">
+            <input id="sliderTitle" placeholder="Title" required />
+            <input id="sliderText" placeholder="Subtitle" required />
+            <input id="sliderHighlight" placeholder="Highlight tag" required />
+            <input id="sliderOrder" type="number" placeholder="Order" value="1" />
+            <button type="submit">Add Slider</button>
+          </form>
+          <div id="slidersList" class="list-grid"></div>
+        </section>
+
+        <section id="branding" class="card">
+          <h3>Branding</h3>
+          <form id="brandingForm" class="form-grid">
+            <input id="faviconUrl" type="url" placeholder="Favicon URL" required />
+            <input id="logoUrl" type="url" placeholder="Logo URL (optional)" />
+            <input id="webviewUrl" type="url" placeholder="WebView URL (Android app)" />
+            <button type="submit">Save Branding</button>
+          </form>
+          <p id="brandingMsg" class="msg"></p>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="./admin.js"></script>
+</body>
+</html>
+
